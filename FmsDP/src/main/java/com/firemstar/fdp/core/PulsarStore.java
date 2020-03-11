@@ -1,4 +1,4 @@
-package com.firemstar.core;
+package com.firemstar.fdp.core;
 
 import org.apache.pulsar.client.api.Consumer;
 import org.apache.pulsar.client.api.PulsarClient;

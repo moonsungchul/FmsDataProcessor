@@ -1,7 +1,7 @@
 ----------------------------------------------------------------
-Thu Mar 05 22:46:07 KST 2020:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance a816c00e-0170-aaf2-3feb-000004deb2e0 
-on database directory memory:/home/moonstar/work/java_work/FmsDataProcessor/FmsDP/testdb with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@3d4eac69 
+Thu Mar 12 00:23:50 KST 2020:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance a816c00e-0170-ca31-d86a-000002f998b0 
+on database directory /home/moonstar/newspaper.db with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@1affbebc 
 Loaded from file:/home/moonstar/.m2/repository/org/apache/derby/derby/10.14.2.0/derby-10.14.2.0.jar
 java.vendor=Ubuntu
 java.runtime.version=11.0.4+11-post-Ubuntu-1ubuntu218.04.3
