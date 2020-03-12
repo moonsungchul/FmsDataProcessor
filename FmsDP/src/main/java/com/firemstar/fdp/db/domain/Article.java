@@ -7,6 +7,16 @@ import org.springframework.data.annotation.Id;
 
 import java.math.BigDecimal;
 
+/**
+ 	create table Article (
+ 		id long primary key, 
+ 		title varchar(1000), 
+ 		text varchar(5000), 
+ 		regDate varchar(255)
+ 	)
+
+ */
+
 @Entity
 public class Article {
 	@javax.persistence.Id
