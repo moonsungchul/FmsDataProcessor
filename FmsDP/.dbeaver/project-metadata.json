@@ -1,0 +1,1 @@
+{"resources":{"Scripts/Script-1.sql":{"sql-editor-data-source-id":"postgres-cockroach-jdbc-170d41ff3aa-30f71622226404db","default-catalog":"postgres","default-schema":"public"},"Scripts/Script.sql":{"default-schema":"public","sql-editor-data-source-id":"postgres-cockroach-jdbc-170ced2f635-3e4b10bda7424ac5","default-catalog":"postgres"}}}

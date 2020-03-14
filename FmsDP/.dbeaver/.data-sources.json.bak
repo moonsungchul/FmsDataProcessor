@@ -1,0 +1,109 @@
+{
+	"folders": {},
+	"connections": {
+		"postgres-cockroach-jdbc-170ced2f635-3e4b10bda7424ac5": {
+			"provider": "postgresql",
+			"driver": "postgres-cockroach-jdbc",
+			"name": "CockroachDB - postgres",
+			"save-password": true,
+			"read-only": false,
+			"configuration": {
+				"host": "localhost",
+				"port": "32769",
+				"database": "postgres",
+				"url": "jdbc:postgresql://localhost:32769/postgres",
+				"type": "dev",
+				"properties": {
+					"connectTimeout": "20",
+					"loginTimeout": "20"
+				},
+				"provider-properties": {
+					"@dbeaver-show-non-default-db@": "false",
+					"@dbeaver-show-template-db@": "false",
+					"postgresql.dd.plain.string": "false",
+					"postgresql.dd.tag.string": "false"
+				}
+			}
+		},
+		"postgres-cockroach-jdbc-170cedc8e22-2e714e10809c148e": {
+			"provider": "postgresql",
+			"driver": "postgres-cockroach-jdbc",
+			"name": "CockroachDB - postgres 2",
+			"save-password": true,
+			"read-only": false,
+			"configuration": {
+				"host": "localhost",
+				"port": "32769",
+				"database": "postgres",
+				"url": "jdbc:postgresql://localhost:32769/postgres",
+				"type": "dev",
+				"properties": {
+					"connectTimeout": "20",
+					"loginTimeout": "20"
+				},
+				"provider-properties": {
+					"@dbeaver-show-non-default-db@": "true",
+					"@dbeaver-show-template-db@": "true",
+					"postgresql.dd.plain.string": "false",
+					"postgresql.dd.tag.string": "false"
+				}
+			}
+		},
+		"postgres-cockroach-jdbc-170d3b816db-1b7e23e98e63dc6c": {
+			"provider": "postgresql",
+			"driver": "postgres-cockroach-jdbc",
+			"name": "CockroachDB - postgres 3",
+			"save-password": true,
+			"read-only": false,
+			"configuration": {
+				"host": "localhost",
+				"port": "32769",
+				"database": "postgres",
+				"url": "jdbc:postgresql://localhost:32769/postgres",
+				"type": "dev",
+				"provider-properties": {
+					"@dbeaver-show-non-default-db@": "false",
+					"@dbeaver-show-template-db@": "false",
+					"postgresql.dd.plain.string": "false",
+					"postgresql.dd.tag.string": "false"
+				},
+				"handlers": {}
+			}
+		},
+		"postgres-cockroach-jdbc-170d41958ca-28a0b006335161b6": {
+			"provider": "postgresql",
+			"driver": "postgres-cockroach-jdbc",
+			"name": "CockroachDB - postgres 4",
+			"save-password": true,
+			"read-only": false,
+			"configuration": {
+				"host": "localhost",
+				"port": "32769",
+				"database": "postgres",
+				"url": "jdbc:postgresql://localhost:32769/postgres",
+				"type": "dev",
+				"properties": {
+					"connectTimeout": "20",
+					"loginTimeout": "20"
+				},
+				"provider-properties": {
+					"@dbeaver-show-non-default-db@": "false",
+					"@dbeaver-show-template-db@": "false",
+					"postgresql.dd.plain.string": "false",
+					"postgresql.dd.tag.string": "false"
+				},
+				"handlers": {}
+			}
+		}
+	},
+	"connection-types": {
+		"dev": {
+			"name": "Development",
+			"color": "255,255,255",
+			"description": "Regular development database",
+			"auto-commit": true,
+			"confirm-execute": false,
+			"confirm-data-change": false
+		}
+	}
+}
