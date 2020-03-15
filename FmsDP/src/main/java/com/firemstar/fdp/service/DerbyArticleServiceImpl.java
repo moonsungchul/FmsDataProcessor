@@ -7,34 +7,34 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.firemstar.fdp.db.domain.Article;
-import com.firemstar.fdp.repositories.ArticleRepository;
+import com.firemstar.fdp.db.derby.domain.DerbyArticle;
+import com.firemstar.fdp.db.derby.repository.DerbyArticleRepository;
 
-@Service
-public class ArticleServiceImpl  implements ArticleService {
+
+public class DerbyArticleServiceImpl  implements DerbyArticleService {
 
 	@Autowired
-    private ArticleRepository articleRepository;
-	
-	/*@Autowired
-    public ArticleServiceImpl() {
+    private DerbyArticleRepository articleRepository;
+
+	@Autowired
+    public DerbyArticleServiceImpl() {
         this.articleRepository = articleRepository;
-    } */
+    } 
 	
 	@Override
-	public List<Article> listAll() {
-		List<Article> articles = new ArrayList<>();
+	public List<DerbyArticle> listAll() {
+		List<DerbyArticle> articles = new ArrayList<>();
 		articleRepository.findAll().forEach(articles::add); //fun with Java 8
 		return articles;
 	}
 
 	@Override
-	public Optional<Article> getById(Long id) {
+	public Optional<DerbyArticle> getById(Long id) {
 		return articleRepository.findById(id);
 	}
 
 	@Override
-	public Article saveOrUpdate(Article article) {
+	public DerbyArticle saveOrUpdate(DerbyArticle article) {
 		articleRepository.save(article);
 		return article;
 	}

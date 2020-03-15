@@ -5,8 +5,7 @@ import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.util.JSONPObject;
-import com.firemstar.fdp.db.domain.Article;
+import com.firemstar.fdp.db.derby.domain.DerbyArticle;
 
 public class JsonUtil {
 	
@@ -17,10 +16,10 @@ public class JsonUtil {
 		mapper = new ObjectMapper();
 	}
 	
-	public Article getArticle(String data) {
-		Article article = null;
+	public DerbyArticle getArticle(String data) {
+		DerbyArticle article = null;
 		try {
-			article = mapper.readValue(data, Article.class);
+			article = mapper.readValue(data, DerbyArticle.class);
 		} catch (JsonProcessingException e) {
 			logger.debug(e.getMessage());
 			e.printStackTrace();

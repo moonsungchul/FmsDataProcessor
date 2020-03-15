@@ -13,8 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import com.firemstar.fdp.core.PulsarThread;
-import com.firemstar.fdp.db.domain.Article;
-import com.firemstar.fdp.repositories.ArticleRepository;
+import com.firemstar.fdp.db.derby.domain.DerbyArticle;
+import com.firemstar.fdp.db.derby.repository.DerbyArticleRepository;
 
 
 @DataJpaTest
@@ -23,7 +23,7 @@ class TestPulsarThread {
 	private Logger logger = LoggerFactory.getLogger(TestPulsarThread.class);
 	
 	@Autowired
-	private ArticleRepository articleDAO;
+	private DerbyArticleRepository articleDAO;
 
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
@@ -50,15 +50,15 @@ class TestPulsarThread {
     	try {
     		logger.info("thread sleep ....");
 			Thread.sleep(50000);
-			Iterable<Article> it = articleDAO.findAll();
-			for(Article v : it) {
+			Iterable<DerbyArticle> it = articleDAO.findAll();
+			for(DerbyArticle v : it) {
 				logger.info(">>>>>> ret article  : " + v.toString());
 			}
 			ct.stopThread();
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		} 
 	}
 
 }

@@ -8,8 +8,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.firemstar.fdp.db.domain.Article;
-import com.firemstar.fdp.repositories.ArticleRepository;
+import com.firemstar.fdp.db.derby.domain.DerbyArticle;
+import com.firemstar.fdp.db.derby.repository.DerbyArticleRepository;
 
 public class PulsarThread implements Runnable {
 	
@@ -23,9 +23,9 @@ public class PulsarThread implements Runnable {
 	private JsonUtil jsonUtil;
 	
 	@Autowired
-	private ArticleRepository articleDAO;
+	private DerbyArticleRepository articleDAO;
 	
-    public PulsarThread(String ip, String port, String topic, ArticleRepository dao){
+    public PulsarThread(String ip, String port, String topic, DerbyArticleRepository dao){
     	this.topic = topic;
     	pulsar = new PulsarStore(ip, port);
     	this.ip = ip;
@@ -51,7 +51,7 @@ public class PulsarThread implements Runnable {
     		try {
     			msg = consumer.receive();
     			System.out.printf("@@@@@@@@@@@@@@@@@@@@@@@@ Message received: %s\n", new String(msg.getData()));
-    			Article article = jsonUtil.getArticle(new String(msg.getData()));
+    			DerbyArticle article = jsonUtil.getArticle(new String(msg.getData()));
     			article.pretreatment();
     			logger.info(">>>>> article : " +  article.toString());
     			

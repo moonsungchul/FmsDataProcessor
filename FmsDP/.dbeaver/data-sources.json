@@ -66,8 +66,7 @@
 					"@dbeaver-show-template-db@": "false",
 					"postgresql.dd.plain.string": "false",
 					"postgresql.dd.tag.string": "false"
-				},
-				"handlers": {}
+				}
 			}
 		},
 		"postgres-cockroach-jdbc-170d41958ca-28a0b006335161b6": {
@@ -91,8 +90,7 @@
 					"@dbeaver-show-template-db@": "false",
 					"postgresql.dd.plain.string": "false",
 					"postgresql.dd.tag.string": "false"
-				},
-				"handlers": {}
+				}
 			}
 		},
 		"postgres-cockroach-jdbc-170d41ff3aa-30f71622226404db": {
@@ -116,7 +114,53 @@
 					"@dbeaver-show-template-db@": "false",
 					"postgresql.dd.plain.string": "false",
 					"postgresql.dd.tag.string": "false"
+				}
+			}
+		},
+		"postgres-cockroach-jdbc-170dc8196af-1e59b2cc9e55c0e6": {
+			"provider": "postgresql",
+			"driver": "postgres-cockroach-jdbc",
+			"name": "CockroachDB - postgres 6",
+			"save-password": true,
+			"read-only": false,
+			"configuration": {
+				"host": "localhost",
+				"port": "32769",
+				"database": "postgres",
+				"url": "jdbc:postgresql://localhost:32769/postgres",
+				"type": "dev",
+				"provider-properties": {
+					"@dbeaver-show-non-default-db@": "false",
+					"@dbeaver-show-template-db@": "false",
+					"postgresql.dd.plain.string": "false",
+					"postgresql.dd.tag.string": "false"
 				},
+				"handlers": {}
+			}
+		},
+		"derby-170dcc79b3a-49acf871bd125f76": {
+			"provider": "generic",
+			"driver": "derby",
+			"name": "Derby Embedded - newspaper.db",
+			"save-password": true,
+			"read-only": false,
+			"configuration": {
+				"database": "/home/moonstar/newspaper.db",
+				"url": "jdbc:derby:/home/moonstar/newspaper.db",
+				"type": "dev",
+				"handlers": {}
+			}
+		},
+		"derby-170dcd434c3-dd3d5c9ef9db5a6": {
+			"provider": "generic",
+			"driver": "derby",
+			"name": "Derby Embedded - newspaper.db 2",
+			"save-password": true,
+			"read-only": false,
+			"configuration": {
+				"database": "/home/moonstar/newspaper.db",
+				"url": "jdbc:derby:/home/moonstar/newspaper.db",
+				"type": "dev",
 				"handlers": {}
 			}
 		}

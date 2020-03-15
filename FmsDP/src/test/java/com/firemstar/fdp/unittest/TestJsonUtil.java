@@ -17,7 +17,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.firemstar.fdp.core.JsonUtil;
-import com.firemstar.fdp.db.domain.Article;
+import com.firemstar.fdp.db.derby.domain.DerbyArticle;
 
 class TestJsonUtil {
 	
@@ -43,7 +43,7 @@ class TestJsonUtil {
 	void test() {
 		JsonUtil jutil = new JsonUtil();
 		String data = "{\"id\":1, \"title\":\"title\", \"text\":\"mmmmmm\", \"regDate\":\"2019-12-30\"}";
-		Article article = jutil.getArticle(data);
+		DerbyArticle article = jutil.getArticle(data);
 		logger.info(">>>>>> article : " + article);
 	}
 	
@@ -55,7 +55,7 @@ class TestJsonUtil {
 			BufferedReader rp = new BufferedReader(new FileReader(new File(fname)));
 			String line = rp.readLine();
 			logger.info(line);
-			Article article = jsonUtil.getArticle(line);
+			DerbyArticle article = jsonUtil.getArticle(line);
 			logger.info(article.toString());
 			rp.close();
 		} catch (FileNotFoundException e) {
