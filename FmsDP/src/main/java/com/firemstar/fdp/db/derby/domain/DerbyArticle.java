@@ -1,11 +1,12 @@
-package com.firemstar.fdp.db.domain;
+package com.firemstar.fdp.db.derby.domain;
+
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 
 import org.springframework.data.annotation.Id;
-
-import java.math.BigDecimal;
 
 /**
  	create table Article (
@@ -14,13 +15,12 @@ import java.math.BigDecimal;
  		text varchar(5000), 
  		regDate varchar(255)
  	)
-
  */
 
 @Entity
-public class Article {
+public class DerbyArticle {
 	@javax.persistence.Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Id
 	private Long id;
 	@Column(length = 1000)
@@ -30,11 +30,11 @@ public class Article {
 	private String regDate;
     
 
-	public Article() {
+	public DerbyArticle() {
 		
 	}
 
-	public Article(String title, String text, String regDate) {
+	public DerbyArticle(String title, String text, String regDate) {
 		super();
 		this.title = title;
 		this.text = text;
