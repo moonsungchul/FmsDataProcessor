@@ -10,19 +10,17 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
 @ServletComponentScan
-//@EnableJpaRepositories("com")
-/*
 @EnableJpaRepositories(
-		entityManagerFactoryRef = "derbyEntityManagerFactory", 
-		transactionManagerRef = "derbyTransactionManager", 
-		basePackages = {"com"}
-) */
-//@EntityScan("com.firemstar.fdp.repositories")   
-@EnableJpaRepositories(
-		entityManagerFactoryRef = "derbyEntityManagerFactory", 
+		entityManagerFactoryRef = "derbyEntityManagerFactory" , 
 		transactionManagerRef = "derbyTransactionManager", 
 		basePackages="com.firemstar.fdp.db"
-)
+) 
+/*
+@EnableJpaRepositories(
+		entityManagerFactoryRef = "cockroachEntityManagerFactory", 
+		transactionManagerRef = "cockroachTransactionManager", 
+		basePackages = {"com.firemstar.fdp.db.cockroach.repository"}
+)  */
 public class FmsDP {
 	
 	public static void main(String[] args) {
