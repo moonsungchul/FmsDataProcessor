@@ -10,11 +10,12 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
 @ServletComponentScan
+@ComponentScan
 @EnableJpaRepositories(
 		entityManagerFactoryRef = "derbyEntityManagerFactory" , 
 		transactionManagerRef = "derbyTransactionManager", 
-		basePackages="com.firemstar.fdp.db"
-) 
+		basePackages="com.firemstar.fdp.db.derby"
+)
 /*
 @EnableJpaRepositories(
 		entityManagerFactoryRef = "cockroachEntityManagerFactory", 

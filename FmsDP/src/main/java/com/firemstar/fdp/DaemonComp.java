@@ -7,7 +7,8 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
-import com.firemstar.fdp.core.PulsarThread;
+import com.firemstar.fdp.db.cockroach.repository.CockroachArticleRepository;
+//import com.firemstar.fdp.core.PulsarThread;
 import com.firemstar.fdp.db.derby.repository.DerbyArticleRepository;
 
 
@@ -18,6 +19,10 @@ public class DaemonComp implements ApplicationListener<ContextRefreshedEvent> {
 	
 	@Autowired
 	private DerbyArticleRepository articleDAO;
+	
+	@Autowired 
+	private CockroachArticleRepository cockroachArticleDAO;
+	
 	@Autowired
 	private AppProperies appConfig;
 

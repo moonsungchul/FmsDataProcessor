@@ -1,5 +1,7 @@
 package com.firemstar.fdp;
 
+import java.util.Iterator;
+
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -15,6 +17,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.stereotype.Component;
 
 import com.firemstar.fdp.core.PulsarThread;
+import com.firemstar.fdp.db.cockroach.domain.CockroachArticle;
+import com.firemstar.fdp.db.cockroach.repository.CockroachArticleRepository;
 import com.firemstar.fdp.db.derby.repository.DerbyArticleRepository;
 
 @WebListener
@@ -24,6 +28,8 @@ public class DaemonListener implements ServletContextListener{
 
 	@Autowired
 	private DerbyArticleRepository articleDAO;
+	@Autowired
+	private CockroachArticleRepository cockroachArticleDAO;
 	@Autowired
 	private AppProperies appConfig;
 	
@@ -39,7 +45,12 @@ public class DaemonListener implements ServletContextListener{
     			articleDAO);
     	Thread t = new Thread(this.thread, "fms");
     	t.start();
+    	
+    	Iterable<CockroachArticle> ar  = this.cockroachArticleDAO.findAll();
+    	logger.info(">>>>>>>>>>>>>>>>>>>>>>> test " +  ar.toString());
     }
+	
+	
     
     
     public void contextInitialized (ServletContextEvent event) {

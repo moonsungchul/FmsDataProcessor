@@ -7,12 +7,14 @@ import org.apache.pulsar.client.api.PulsarClientException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import com.firemstar.fdp.db.cockroach.repository.CockroachArticleRepository;
 import com.firemstar.fdp.db.derby.domain.DerbyArticle;
 import com.firemstar.fdp.db.derby.repository.DerbyArticleRepository;
 
-public class PulsarThread implements Runnable {
+
+public class DataProcessThread implements Runnable {
 	
 	private Logger logger = LoggerFactory.getLogger(PulsarThread.class);
 	
@@ -23,20 +25,15 @@ public class PulsarThread implements Runnable {
 	private boolean stop = false;
 	private JsonUtil jsonUtil;
 	
-	@Autowired
-	private DerbyArticleRepository articleDAO;
+	//@Autowired
+	//private CockroachArticleRepository articleDAO;
 	
-	@Autowired 
-	private CockroachArticleRepository cockroachArticleDAO;
-	
-	
-    public PulsarThread(String ip, String port, String topic, DerbyArticleRepository dao){
+    public DataProcessThread(String ip, String port, String topic){
     	this.topic = topic;
     	pulsar = new PulsarStore(ip, port);
     	this.ip = ip;
     	this.port = port;
     	jsonUtil = new JsonUtil();
-    	articleDAO = dao;
     }
     
     public void stopThread() {
@@ -45,37 +42,7 @@ public class PulsarThread implements Runnable {
 	
     @Override
     public void run() {
-    	System.out.println("ip : " +  ip);
-    	System.out.println("port : " +  port);
-    	PulsarClient cl = pulsar.getClient();
-    	System.out.println("cl : " +  cl);
-    	Consumer consumer = pulsar.getConsumer(cl,  this.topic);
-    	System.out.println("consumer : " +  consumer);
-    	Message msg = null;
-    	while(!stop) {
-    		try {
-    			msg = consumer.receive();
-    			System.out.printf("@@@@@@@@@@@@@@@@@@@@@@@@ Message received: %s\n", new String(msg.getData()));
-    			DerbyArticle article = jsonUtil.getArticle(new String(msg.getData()));
-    			article.pretreatment();
-    			logger.info(">>>>> article : " +  article.toString());
-    			
-    			articleDAO.save(article);
-    			consumer.acknowledge(msg);
-    			Thread.sleep(1);
-    		} catch (PulsarClientException e1) {
-    			e1.printStackTrace();
-    			consumer.negativeAcknowledge(msg);
-    		} catch (InterruptedException e) {
-    			e.printStackTrace();
-    		}
-    	}
-    	System.out.println("thread stop!!!!");
-		try {
-			cl.close();
-		} catch (PulsarClientException e1) {
-				e1.printStackTrace();
-		}
+    	logger.info(">>>>>>>>>>>>>>>> thread run <<<<<<<<<<<<<<<<<");
     }
    
     /**
