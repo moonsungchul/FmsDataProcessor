@@ -24,16 +24,16 @@ public class DataProcessThread implements Runnable {
 	private String port;
 	private boolean stop = false;
 	private JsonUtil jsonUtil;
+	private CockroachArticleRepository articlDAO;
 	
-	//@Autowired
-	//private CockroachArticleRepository articleDAO;
 	
-    public DataProcessThread(String ip, String port, String topic){
+    public DataProcessThread(String ip, String port, String topic, CockroachArticleRepository dao){
     	this.topic = topic;
     	pulsar = new PulsarStore(ip, port);
     	this.ip = ip;
     	this.port = port;
     	jsonUtil = new JsonUtil();
+    	this.articlDAO = dao;
     }
     
     public void stopThread() {

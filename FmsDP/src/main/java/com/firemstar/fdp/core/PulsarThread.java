@@ -22,12 +22,7 @@ public class PulsarThread implements Runnable {
 	private String port;
 	private boolean stop = false;
 	private JsonUtil jsonUtil;
-	
-	@Autowired
 	private DerbyArticleRepository articleDAO;
-	
-	@Autowired 
-	private CockroachArticleRepository cockroachArticleDAO;
 	
 	
     public PulsarThread(String ip, String port, String topic, DerbyArticleRepository dao){

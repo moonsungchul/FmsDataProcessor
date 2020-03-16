@@ -33,7 +33,8 @@ public class DaemonListener implements ServletContextListener{
 	@Autowired
 	private AppProperies appConfig;
 	
-	private ServletContext sc;
+	
+	//private ServletContext sc;
 	private PulsarThread thread;
     
 	public void startDaemon() {
@@ -54,7 +55,7 @@ public class DaemonListener implements ServletContextListener{
     
     
     public void contextInitialized (ServletContextEvent event) {
-        sc = event.getServletContext();
+        //sc = event.getServletContext();
         startDaemon();
     }
     

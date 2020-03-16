@@ -18,7 +18,7 @@ public class DerbyArticleServiceImpl  implements DerbyArticleService {
 
 	@Autowired
     public DerbyArticleServiceImpl() {
-        this.articleRepository = articleRepository;
+        //this.articleRepository = articleRepository;
     } 
 	
 	@Override
