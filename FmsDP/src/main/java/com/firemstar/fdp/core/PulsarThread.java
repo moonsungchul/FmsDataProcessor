@@ -1,5 +1,8 @@
 package com.firemstar.fdp.core;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import org.apache.pulsar.client.api.Consumer;
 import org.apache.pulsar.client.api.Message;
 import org.apache.pulsar.client.api.PulsarClient;
@@ -37,6 +40,12 @@ public class PulsarThread implements Runnable {
     public void stopThread() {
     	stop = false;
     }
+    
+    public String getTodayRegDate() {
+    	Date from = new Date();
+    	SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm::ss");
+    	return transFormat.format(from);
+    }
 	
     @Override
     public void run() {
@@ -50,11 +59,10 @@ public class PulsarThread implements Runnable {
     	while(!stop) {
     		try {
     			msg = consumer.receive();
-    			System.out.printf("@@@@@@@@@@@@@@@@@@@@@@@@ Message received: %s\n", new String(msg.getData()));
     			DerbyArticle article = jsonUtil.getArticle(new String(msg.getData()));
+    			article.setRegDate(getTodayRegDate());
     			article.pretreatment();
-    			logger.info(">>>>> article : " +  article.toString());
-    			
+    			logger.info(">>>>> receive msg article : " +  article.toString());
     			articleDAO.save(article);
     			consumer.acknowledge(msg);
     			Thread.sleep(1);

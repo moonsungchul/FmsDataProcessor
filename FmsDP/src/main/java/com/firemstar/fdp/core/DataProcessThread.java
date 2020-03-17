@@ -1,5 +1,7 @@
 package com.firemstar.fdp.core;
 
+import java.util.Optional;
+
 import org.apache.pulsar.client.api.Consumer;
 import org.apache.pulsar.client.api.Message;
 import org.apache.pulsar.client.api.PulsarClient;
@@ -9,31 +11,30 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
+import com.firemstar.fdp.db.cockroach.domain.CockroachArticle;
 import com.firemstar.fdp.db.cockroach.repository.CockroachArticleRepository;
 import com.firemstar.fdp.db.derby.domain.DerbyArticle;
 import com.firemstar.fdp.db.derby.repository.DerbyArticleRepository;
+
+import jdk.internal.jline.internal.Log;
 
 
 public class DataProcessThread implements Runnable {
 	
 	private Logger logger = LoggerFactory.getLogger(PulsarThread.class);
 	
-	private PulsarStore pulsar;
-	private String topic;
-	private String ip;
-	private String port;
 	private boolean stop = false;
-	private JsonUtil jsonUtil;
-	private CockroachArticleRepository articlDAO;
+	private final long delay_time = 10000;
+	
+	private CockroachArticleRepository cockroachDAO;
+	private DerbyArticleRepository derbyDAO;
 	
 	
-    public DataProcessThread(String ip, String port, String topic, CockroachArticleRepository dao){
-    	this.topic = topic;
-    	pulsar = new PulsarStore(ip, port);
-    	this.ip = ip;
-    	this.port = port;
-    	jsonUtil = new JsonUtil();
-    	this.articlDAO = dao;
+    public DataProcessThread(String ip, String port, String topic, 
+    		CockroachArticleRepository cockroach, 
+    		DerbyArticleRepository derby){
+    	this.cockroachDAO = cockroach;
+    	this.derbyDAO = derby;
     }
     
     public void stopThread() {
@@ -43,7 +44,35 @@ public class DataProcessThread implements Runnable {
     @Override
     public void run() {
     	logger.info(">>>>>>>>>>>>>>>> thread run <<<<<<<<<<<<<<<<<");
+    	while(!this.stop) {
+    		if(this.derbyDAO.count() > 0) {
+    			long min_id = this.derbyDAO.getMinID();
+    			logger.info(">>>>>> min id " + min_id);
+    			Optional<DerbyArticle> art =  this.derbyDAO.findById(min_id);
+    			if(art.isPresent()) {
+    				logger.info(">>>>>> :" + art.get().toString());
+    				if(this.cockroachDAO.countTitle(art.get().getTitle()) == 0) {
+    					CockroachArticle coc = new CockroachArticle(
+    							art.get().getTitle(), 
+    							art.get().getText(), 
+    							art.get().getRegDate(), 
+    							"");
+    					this.cockroachDAO.save(coc);
+    				} else {
+    					logger.info("same data!");
+    				}
+    				this.derbyDAO.delete(art.get());
+    			}
+    		}  else {
+    			try {
+    				Thread.sleep(this.delay_time);
+    			} catch (InterruptedException e) {
+    				e.printStackTrace();
+    			}
+    		} // else 
+    	} // while...
     }
+    
    
     /**
      * daa을 데이터베이스에 저장한다. 

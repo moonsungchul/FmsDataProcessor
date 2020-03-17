@@ -16,6 +16,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.stereotype.Component;
 
+import com.firemstar.fdp.core.DataProcessThread;
 import com.firemstar.fdp.core.PulsarThread;
 import com.firemstar.fdp.db.cockroach.domain.CockroachArticle;
 import com.firemstar.fdp.db.cockroach.repository.CockroachArticleRepository;
@@ -27,7 +28,7 @@ public class DaemonListener implements ServletContextListener{
 	private Logger logger = LoggerFactory.getLogger(DaemonListener.class);
 
 	@Autowired
-	private DerbyArticleRepository articleDAO;
+	private DerbyArticleRepository derbyArticleDAO;
 	@Autowired
 	private CockroachArticleRepository cockroachArticleDAO;
 	@Autowired
@@ -36,6 +37,7 @@ public class DaemonListener implements ServletContextListener{
 	
 	//private ServletContext sc;
 	private PulsarThread thread;
+	private DataProcessThread processThread;
     
 	public void startDaemon() {
 		logger.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>.. start pulsar thread");
@@ -43,12 +45,19 @@ public class DaemonListener implements ServletContextListener{
     			appConfig.getPulsar().getHost(), 
     			appConfig.getPulsar().getPort(), 
     			appConfig.getPulsar().getTopic(), 
-    			articleDAO);
-    	Thread t = new Thread(this.thread, "fms");
+    			derbyArticleDAO);
+    	Thread t = new Thread(this.thread, "derby");
     	t.start();
     	
-    	Iterable<CockroachArticle> ar  = this.cockroachArticleDAO.findAll();
-    	logger.info(">>>>>>>>>>>>>>>>>>>>>>> test " +  ar.toString());
+    	this.processThread = new DataProcessThread(
+    			appConfig.getPulsar().getHost(), 
+    			appConfig.getPulsar().getPort(), 
+    			appConfig.getPulsar().getTopic(), 
+    			cockroachArticleDAO,
+    			derbyArticleDAO);
+    	Thread t2 = new Thread(this.processThread, "cockroach");
+    	t2.start();
+    	
     }
 	
 	
@@ -61,5 +70,6 @@ public class DaemonListener implements ServletContextListener{
     
     public void contextDestroyed (ServletContextEvent event) {
     	this.thread.stopThread();
+    	this.processThread.stopThread();
     }
 }
