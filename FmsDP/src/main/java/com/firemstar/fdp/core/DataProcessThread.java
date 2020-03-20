@@ -44,6 +44,7 @@ public class DataProcessThread implements Runnable {
     @Override
     public void run() {
     	logger.info(">>>>>>>>>>>>>>>> thread run <<<<<<<<<<<<<<<<<");
+    	HangulParser parser = new HangulParser();
     	while(!this.stop) {
     		if(this.derbyDAO.count() > 0) {
     			long min_id = this.derbyDAO.getMinID();
@@ -52,11 +53,14 @@ public class DataProcessThread implements Runnable {
     			if(art.isPresent()) {
     				logger.info(">>>>>> :" + art.get().toString());
     				if(this.cockroachDAO.countTitle(art.get().getTitle()) == 0) {
+    					KomoranResultAr retAr = parser.parsing(art.get().getText());
     					CockroachArticle coc = new CockroachArticle(
     							art.get().getTitle(), 
     							art.get().getText(), 
     							art.get().getRegDate(), 
-    							"");
+    							String.join(",", retAr.getnArr()), 
+    							String.join(",", retAr.getvArr()), 
+    							String.join(",", retAr.getVaArr()));
     					this.cockroachDAO.save(coc);
     				} else {
     					logger.info("same data!");

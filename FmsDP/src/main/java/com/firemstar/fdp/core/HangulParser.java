@@ -20,17 +20,39 @@ public class HangulParser {
 	public HangulParser() {
 		komoran = new Komoran(DEFAULT_MODEL.STABLE);
 	}
-	
-	public ArrayList<String> parsing(String ss ) {
-		ArrayList<String> ret = new ArrayList<String>();
+
+	/**
+	 * 명사, 동사, 형용사를 추출한다. 
+	 * @param ss
+	 * @return
+	 */
+	public KomoranResultAr parsing(String ss ) {
+		KomoranResultAr ret = new KomoranResultAr();
 		KomoranResult res = komoran.analyze(ss);
 		
 		logger.info(res.getPlainText());
 		List<Token> tokenList = res.getTokenList();
 		for(Token token : tokenList) {
-			System.out.format("(%2d, %2d) %s/%s\n", token.getBeginIndex(), token.getEndIndex(), token.getMorph(), token.getPos());
+			System.out.format("(%2d, %2d) %s/%s\n", 
+					token.getBeginIndex(), token.getEndIndex(), 
+					token.getMorph(), token.getPos());
+			if(token.getPos().equals("NNG") || 
+					token.getPos().equals("NNP") || 
+					token.getPos().equals("NNB") ) {
+				if(ret.getnArr().contains(token.getMorph()) == false) {
+					ret.getnArr().add(token.getMorph());
+				}
+			} else if (token.getPos().equals("VV")) {
+				if(ret.getvArr().contains(token.getMorph()) == false) {
+					ret.getvArr().add(token.getMorph());
+				}
+			} else if (token.getPos().equals("VA")) {
+				if(ret.getVaArr().contains(token.getMorph()) == false) {
+					ret.getVaArr().add(token.getMorph());
+				}
+			}
 		}
-		return ret;
+	return ret;
 	}
 
 }
