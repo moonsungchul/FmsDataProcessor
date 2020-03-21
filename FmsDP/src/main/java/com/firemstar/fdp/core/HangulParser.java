@@ -33,9 +33,6 @@ public class HangulParser {
 		logger.info(res.getPlainText());
 		List<Token> tokenList = res.getTokenList();
 		for(Token token : tokenList) {
-			System.out.format("(%2d, %2d) %s/%s\n", 
-					token.getBeginIndex(), token.getEndIndex(), 
-					token.getMorph(), token.getPos());
 			if(token.getPos().equals("NNG") || 
 					token.getPos().equals("NNP") || 
 					token.getPos().equals("NNB") ) {

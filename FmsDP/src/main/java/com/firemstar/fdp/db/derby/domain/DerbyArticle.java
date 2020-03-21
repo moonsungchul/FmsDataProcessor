@@ -30,17 +30,20 @@ public class DerbyArticle {
 	@Column(length = 5000)
 	private String text;
 	private String regDate;
-    
+	@Column(length = 255)
+	private String company;
+	
 
 	public DerbyArticle() {
 		
 	}
 
-	public DerbyArticle(String title, String text, String regDate) {
+	public DerbyArticle(String title, String text, String regDate, String company) {
 		super();
 		this.title = title;
 		this.text = text;
 		this.regDate = regDate;
+		this.company = company;
 	}
 	public Long getId() {
 		return id;
@@ -74,10 +77,19 @@ public class DerbyArticle {
 		this.title = this.title.replace("'", "");
 		this.text = this.text.replace("'", "");
 	}
-	
+
+	public String getCompany() {
+		return company;
+	}
+
+	public void setCompany(String company) {
+		this.company = company;
+	}
+
 	@Override
 	public String toString() {
-		return "Article [id=" + id + ", title=" + title + ", text=" + text + ", regDate=" + regDate + "]";
+		return "DerbyArticle [id=" + id + ", title=" + title + ", text=" + text + ", regDate=" + regDate + ", company="
+				+ company + "]";
 	}
 
 }

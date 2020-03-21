@@ -38,6 +38,8 @@ public class CockroachArticle {
 	private String vwords;
 	@Column(length = 5000)
 	private String awords;
+	@Column(length = 255)
+	private String company;
 
 	public CockroachArticle() {
 		
@@ -45,7 +47,7 @@ public class CockroachArticle {
 
 	public CockroachArticle(String title, String text, 
 			String regDate, String nwords, 
-			String vwords, String awords) {
+			String vwords, String awords, String company) {
 		super();
 		this.title = title;
 		this.text = text;
@@ -53,6 +55,7 @@ public class CockroachArticle {
 		this.nwords = nwords;
 		this.vwords = vwords;
 		this.awords = awords;
+		this.company = company;
 	}
 	public Long getId() {
 		return id;
@@ -111,10 +114,18 @@ public class CockroachArticle {
 		this.awords = awords;
 	}
 
+	public String getCompany() {
+		return company;
+	}
+
+	public void setCompany(String company) {
+		this.company = company;
+	}
+
 	@Override
 	public String toString() {
 		return "CockroachArticle [id=" + id + ", title=" + title + ", text=" + text + ", regDate=" + regDate
-				+ ", nwords=" + nwords + ", vwords=" + vwords + ", awords=" + awords + "]";
+				+ ", nwords=" + nwords + ", vwords=" + vwords + ", awords=" + awords + ", company=" + company + "]";
 	}
 	
 

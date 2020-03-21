@@ -60,7 +60,8 @@ public class DataProcessThread implements Runnable {
     							art.get().getRegDate(), 
     							String.join(",", retAr.getnArr()), 
     							String.join(",", retAr.getvArr()), 
-    							String.join(",", retAr.getVaArr()));
+    							String.join(",", retAr.getVaArr()), 
+    							art.get().getCompany());
     					this.cockroachDAO.save(coc);
     				} else {
     					logger.info("same data!");
