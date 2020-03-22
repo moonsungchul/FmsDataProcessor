@@ -1,5 +1,6 @@
 package com.firemstar.fdp.core;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.apache.pulsar.client.api.Consumer;
@@ -11,6 +12,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
+import com.firemstar.fdp.core.solr.SolrArticle;
+import com.firemstar.fdp.core.solr.SolrStore;
 import com.firemstar.fdp.db.cockroach.domain.CockroachArticle;
 import com.firemstar.fdp.db.cockroach.repository.CockroachArticleRepository;
 import com.firemstar.fdp.db.derby.domain.DerbyArticle;
@@ -28,13 +31,15 @@ public class DataProcessThread implements Runnable {
 	
 	private CockroachArticleRepository cockroachDAO;
 	private DerbyArticleRepository derbyDAO;
+	private SolrStore solrStore;
 	
 	
     public DataProcessThread(String ip, String port, String topic, 
     		CockroachArticleRepository cockroach, 
-    		DerbyArticleRepository derby){
+    		DerbyArticleRepository derby, String solr_url, String solr_core){
     	this.cockroachDAO = cockroach;
     	this.derbyDAO = derby;
+    	this.solrStore = new SolrStore(solr_url, solr_core);
     }
     
     public void stopThread() {
@@ -63,6 +68,7 @@ public class DataProcessThread implements Runnable {
     							String.join(",", retAr.getVaArr()), 
     							art.get().getCompany());
     					this.cockroachDAO.save(coc);
+    					this.saveSolrArticle(coc);
     				} else {
     					logger.info("same data!");
     				}
@@ -76,6 +82,31 @@ public class DataProcessThread implements Runnable {
     			}
     		} // else 
     	} // while...
+    }
+   
+    /**
+     * 데이터를 solr에 저장한다. 
+     * @param art
+     */
+    public void saveSolrArticle(CockroachArticle art) {
+    	
+    	String ss = String.format("title:%s", this.filterQuery(art.getTitle()));
+    	List<SolrArticle> alist = this.solrStore.searchArticle(ss, 0, 1);
+    	logger.info("######## save solr  :" +  ss + " size : " + alist.size());
+    	if(alist.size() == 0) {
+    		SolrArticle obj = new SolrArticle("", art.getTitle(), 
+    				art.getText(), art.getNwords(), 
+    				art.getVwords(), art.getAwords(), 
+    				art.getCompany(), art.getRegDate());
+    		obj.arrangment();
+    		this.solrStore.addArticle(obj);
+    	}
+    }
+    
+    public String filterQuery(String ss) {
+    	String val = ss.replace("[", "\\[");
+    	val = val.replace("]", "\\]");
+    	return val;
     }
     
    

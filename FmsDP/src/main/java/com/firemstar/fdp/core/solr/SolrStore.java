@@ -23,7 +23,7 @@ public class SolrStore {
 	public SolrStore(String url, String coll) {
 		this.url = url;
 		this.collection = coll;
-		String ss = String.format("%s/%s", this.url, this.collection );
+		String ss = String.format("%s/solr/%s", this.url, this.collection );
 		logger.info("solr url :" + ss);
 		this.solr = new HttpSolrClient.Builder(ss).build();
 		//this.solr.setParser(new XMLResponseParser());
@@ -39,7 +39,6 @@ public class SolrStore {
 			e.printStackTrace();
 		}
 	}
-	
 	
 	public List<SolrArticle> searchArticle(String query, int start, int rows) {
 		SolrQuery qq = new SolrQuery();
@@ -79,6 +78,10 @@ public class SolrStore {
 			e.printStackTrace();
 		}
 	}
+	
+	
+	
+	
 	
 
 }

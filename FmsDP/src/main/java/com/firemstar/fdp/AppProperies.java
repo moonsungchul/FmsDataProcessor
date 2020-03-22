@@ -12,11 +12,34 @@ import java.util.List;
 public class AppProperies {
 
 	private Pulsar pulsar;
+	private Solr solr;
+	
+	
+	public static class Solr {
+		private String url;
+		private String collection;
+		public String getUrl() {
+			return url;
+		}
+		public void setUrl(String url) {
+			this.url = url;
+		}
+		public String getCollection() {
+			return collection;
+		}
+		public void setCollection(String collection) {
+			this.collection = collection;
+		}
+		
+		
+	}
+	
 
 	public static class Pulsar {
 		private String host;
 		private String port;
 		private String topic;
+		
 		@Override
 		public String toString() {
 			return "Pulsar [host=" + host + ", port=" + port + ", topic=" + topic + "]";
@@ -49,6 +72,16 @@ public class AppProperies {
 	public void setPulsar(Pulsar pulsar) {
 		this.pulsar = pulsar;
 	}
+
+	public Solr getSolr() {
+		return solr;
+	}
+
+	public void setSolr(Solr solr) {
+		this.solr = solr;
+	}
+	
+	
 	
 	
 	

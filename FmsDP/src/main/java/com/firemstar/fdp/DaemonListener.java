@@ -54,7 +54,9 @@ public class DaemonListener implements ServletContextListener{
     			appConfig.getPulsar().getPort(), 
     			appConfig.getPulsar().getTopic(), 
     			cockroachArticleDAO,
-    			derbyArticleDAO);
+    			derbyArticleDAO, 
+    			appConfig.getSolr().getUrl(), 
+    			appConfig.getSolr().getCollection());
     	Thread t2 = new Thread(this.processThread, "cockroach");
     	t2.start();
     	
