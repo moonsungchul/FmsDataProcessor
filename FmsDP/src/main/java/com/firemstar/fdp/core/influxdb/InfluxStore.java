@@ -1,5 +1,7 @@
 package com.firemstar.fdp.core.influxdb;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalTime;
 import java.util.concurrent.TimeUnit;
 
 import org.influxdb.InfluxDB;
@@ -13,16 +15,14 @@ import org.slf4j.LoggerFactory;
 public class InfluxStore {
 	
 	private Logger logger = LoggerFactory.getLogger(InfluxStore.class);
-	private String url;
-	private String userName;
-	private String password;
-	private String dbname;
 	private InfluxDB influx;
+	private String dbname;
 	
-	public InfluxStore(String url, String user, String password, String dbname) {
+	public InfluxStore(String host, String port, String user, String password, String dbname) {
+		String url = "http://" + host + ":" + port;
+		this.influx = InfluxDBFactory.connect(url, user, password);
+		this.influx.setDatabase(dbname);
 		this.dbname = dbname;
-		this.influx = InfluxDBFactory.connect(this.url, this.userName, this.password);
-		this.influx.setDatabase(this.dbname);
 	}
 	
 	
@@ -32,19 +32,12 @@ public class InfluxStore {
 	
 	public void writeLog(InfluxLog log) {
 		this.influx.write(Point.measurement("log")
-				.time(System.currentTimeMillis(), TimeUnit.MICROSECONDS)
 				.addField("type", log.getLogType())
 				.addField("key", log.getLogKey())
 				.addField("msg", log.getMsg())
 				.build()
 				);
 	}
-	
-	
-	
-	
-	
-	
 	
 
 }

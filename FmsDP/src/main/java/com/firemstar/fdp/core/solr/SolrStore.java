@@ -26,7 +26,6 @@ public class SolrStore {
 		String ss = String.format("%s/solr/%s", this.url, this.collection );
 		logger.info("solr url :" + ss);
 		this.solr = new HttpSolrClient.Builder(ss).build();
-		//this.solr.setParser(new XMLResponseParser());
 	}
 	
 	public void addArticle(SolrArticle art) {
