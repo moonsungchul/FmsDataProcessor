@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
+import com.firemstar.fdp.core.influxdb.InfluxLoggerCM;
 import com.firemstar.fdp.core.solr.SolrArticle;
 import com.firemstar.fdp.core.solr.SolrStore;
 import com.firemstar.fdp.db.cockroach.domain.CockroachArticle;
@@ -25,6 +26,9 @@ import jdk.internal.jline.internal.Log;
 public class DataProcessThread implements Runnable {
 	
 	private Logger logger = LoggerFactory.getLogger(PulsarThread.class);
+	
+	@Autowired 
+	private InfluxLoggerCM influx;
 	
 	private boolean stop = false;
 	private final long delay_time = 10000;
