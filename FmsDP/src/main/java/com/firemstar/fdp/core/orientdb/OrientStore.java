@@ -3,6 +3,8 @@ package com.firemstar.fdp.core.orientdb;
 import com.orientechnologies.orient.core.db.ODatabaseSession;
 import com.orientechnologies.orient.core.db.OrientDB;
 import com.orientechnologies.orient.core.db.OrientDBConfig;
+import com.orientechnologies.orient.core.metadata.schema.OClass;
+import com.orientechnologies.orient.core.metadata.schema.OType;
 
 public class OrientStore {
 	
@@ -24,17 +26,33 @@ public class OrientStore {
 		}
 	}
 	
-	public void createVertexClass(String cname) {
+	public OClass createVertexClass(String cname) {
 		if(this.session.getClass(cname) == null) {
-			this.session.createVertexClass(cname);
-		}
+			return this.session.createVertexClass(cname);
+		} 
+		return this.session.getClass(cname);
 	}
 	
-	public void createEdgeClass(String cname) {
+	public OClass createEdgeClass(String cname) {
 		if(this.session.getClass(cname) == null) {
-			this.session.createEdgeClass(cname);
-		}
+			return this.session.createEdgeClass(cname);
+		} 
+		return this.session.getClass(cname);
 	}
+	
+	public void createProperty(String cname, String pro, OType type) {
+		OClass cl = this.session.getClass(cname);
+		if(cl == null) return;
+		cl.createProperty(pro, type);
+	}
+	
+	public void createIndex(String cname, String index_name, String fname, OClass.INDEX_TYPE type ) {
+		OClass cl = this.session.getClass(cname);
+		if(cl == null) return;
+		cl.createIndex(index_name, type, fname);
+	}
+	
+	
 	
 
 }
