@@ -36,8 +36,10 @@ public class OrientStoreSP {
 		this.orient.createIndex("ArticleV", "article_id_index", "id", OClass.INDEX_TYPE.UNIQUE);
 		this.orient.createIndex("Words", "sid_index", "sid", OClass.INDEX_TYPE.UNIQUE);
 		this.orient.createIndex("Words", "word_index", "word", OClass.INDEX_TYPE.UNIQUE);
-		
 	}
+	
+	
+	
 	
 
 }

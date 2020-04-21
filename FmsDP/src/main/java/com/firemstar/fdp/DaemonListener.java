@@ -18,6 +18,7 @@ import org.springframework.stereotype.Component;
 
 import com.firemstar.fdp.core.DataProcessThread;
 import com.firemstar.fdp.core.PulsarThread;
+import com.firemstar.fdp.core.influxdb.InfluxLoggerCM;
 import com.firemstar.fdp.db.cockroach.domain.CockroachArticle;
 import com.firemstar.fdp.db.cockroach.repository.CockroachArticleRepository;
 import com.firemstar.fdp.db.derby.repository.DerbyArticleRepository;
@@ -34,6 +35,9 @@ public class DaemonListener implements ServletContextListener{
 	@Autowired
 	private AppProperies appConfig;
 	
+	@Autowired
+	private InfluxLoggerCM influx;
+	
 	
 	//private ServletContext sc;
 	private PulsarThread thread;
@@ -45,7 +49,7 @@ public class DaemonListener implements ServletContextListener{
     			appConfig.getPulsar().getHost(), 
     			appConfig.getPulsar().getPort(), 
     			appConfig.getPulsar().getTopic(), 
-    			derbyArticleDAO);
+    			derbyArticleDAO, influx);
     	Thread t = new Thread(this.thread, "derby");
     	t.start();
     	
@@ -56,7 +60,7 @@ public class DaemonListener implements ServletContextListener{
     			cockroachArticleDAO,
     			derbyArticleDAO, 
     			appConfig.getSolr().getUrl(), 
-    			appConfig.getSolr().getCollection());
+    			appConfig.getSolr().getCollection(), this.influx);
     	Thread t2 = new Thread(this.processThread, "cockroach");
     	t2.start();
     	

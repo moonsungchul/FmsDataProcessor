@@ -76,6 +76,9 @@ public class DerbyArticle {
 	public void pretreatment() {
 		this.title = this.title.replace("'", "");
 		this.text = this.text.replace("'", "");
+		if(this.text.length() >= 5000) {
+			this.text = this.text.substring(0, 4999);
+		}
 	}
 
 	public String getCompany() {

@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
+import com.firemstar.fdp.core.influxdb.InfluxLogger;
 import com.firemstar.fdp.core.influxdb.InfluxLoggerCM;
 import com.firemstar.fdp.core.solr.SolrArticle;
 import com.firemstar.fdp.core.solr.SolrStore;
@@ -27,7 +28,6 @@ public class DataProcessThread implements Runnable {
 	
 	private Logger logger = LoggerFactory.getLogger(PulsarThread.class);
 	
-	@Autowired 
 	private InfluxLoggerCM influx;
 	
 	private boolean stop = false;
@@ -40,10 +40,11 @@ public class DataProcessThread implements Runnable {
 	
     public DataProcessThread(String ip, String port, String topic, 
     		CockroachArticleRepository cockroach, 
-    		DerbyArticleRepository derby, String solr_url, String solr_core){
+    		DerbyArticleRepository derby, String solr_url, String solr_core, InfluxLoggerCM influx){
     	this.cockroachDAO = cockroach;
     	this.derbyDAO = derby;
     	this.solrStore = new SolrStore(solr_url, solr_core);
+    	this.influx = influx;
     }
     
     public void stopThread() {
@@ -52,12 +53,12 @@ public class DataProcessThread implements Runnable {
 	
     @Override
     public void run() {
-    	logger.info(">>>>>>>>>>>>>>>> thread run <<<<<<<<<<<<<<<<<");
+    	System.out.println(this.influx);
+    	this.influx.getLogger().info("DataProcess", "Start DataProcess thread start");
     	HangulParser parser = new HangulParser();
     	while(!this.stop) {
     		if(this.derbyDAO.count() > 0) {
     			long min_id = this.derbyDAO.getMinID();
-    			logger.info(">>>>>> min id " + min_id);
     			Optional<DerbyArticle> art =  this.derbyDAO.findById(min_id);
     			if(art.isPresent()) {
     				logger.info(">>>>>> :" + art.get().toString());
@@ -73,6 +74,7 @@ public class DataProcessThread implements Runnable {
     							art.get().getCompany());
     					this.cockroachDAO.save(coc);
     					this.saveSolrArticle(coc);
+    					
     				} else {
     					logger.info("same data!");
     				}
@@ -97,6 +99,7 @@ public class DataProcessThread implements Runnable {
     	String ss = String.format("title:%s", this.filterQuery(art.getTitle()));
     	List<SolrArticle> alist = this.solrStore.searchArticle(ss, 0, 1);
     	logger.info("######## save solr  :" +  ss + " size : " + alist.size());
+    	this.influx.getLogger().info("SOLR", "save data size : " + alist.size());
     	if(alist.size() == 0) {
     		SolrArticle obj = new SolrArticle("", art.getTitle(), 
     				art.getText(), art.getNwords(), 

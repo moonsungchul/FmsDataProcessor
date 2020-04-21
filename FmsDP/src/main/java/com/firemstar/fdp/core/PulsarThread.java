@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.firemstar.fdp.core.influxdb.InfluxLoggerCM;
 import com.firemstar.fdp.db.cockroach.repository.CockroachArticleRepository;
 import com.firemstar.fdp.db.derby.domain.DerbyArticle;
 import com.firemstar.fdp.db.derby.repository.DerbyArticleRepository;
@@ -26,15 +27,19 @@ public class PulsarThread implements Runnable {
 	private boolean stop = false;
 	private JsonUtil jsonUtil;
 	private DerbyArticleRepository articleDAO;
+	private InfluxLoggerCM influx;
 	
 	
-    public PulsarThread(String ip, String port, String topic, DerbyArticleRepository dao){
+    public PulsarThread(String ip, String port, String topic, 
+    		DerbyArticleRepository dao, InfluxLoggerCM influx){
     	this.topic = topic;
     	pulsar = new PulsarStore(ip, port);
     	this.ip = ip;
     	this.port = port;
     	jsonUtil = new JsonUtil();
     	articleDAO = dao;
+    	this.influx = influx;
+    	
     }
     
     public void stopThread() {
@@ -49,12 +54,9 @@ public class PulsarThread implements Runnable {
 	
     @Override
     public void run() {
-    	System.out.println("ip : " +  ip);
-    	System.out.println("port : " +  port);
+    	this.influx.getLogger().info("PulsarThread", "Start Trhead");
     	PulsarClient cl = pulsar.getClient();
-    	System.out.println("cl : " +  cl);
     	Consumer consumer = pulsar.getConsumer(cl,  this.topic);
-    	System.out.println("consumer : " +  consumer);
     	Message msg = null;
     	while(!stop) {
     		try {
@@ -63,6 +65,7 @@ public class PulsarThread implements Runnable {
     			article.setRegDate(getTodayRegDate());
     			article.pretreatment();
     			logger.info(">>>>> receive msg article : " +  article.toString());
+    			this.influx.getLogger().info("PulsarThread", "receive msg article : " + article.getTitle());
     			articleDAO.save(article);
     			consumer.acknowledge(msg);
     			Thread.sleep(1);
@@ -74,6 +77,7 @@ public class PulsarThread implements Runnable {
     		}
     	}
     	System.out.println("thread stop!!!!");
+    	this.influx.getLogger().info("PulsarThread", "Stop Trhead");
 		try {
 			cl.close();
 		} catch (PulsarClientException e1) {

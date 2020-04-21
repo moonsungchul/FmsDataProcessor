@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import com.firemstar.fdp.core.PulsarThread;
+import com.firemstar.fdp.core.influxdb.InfluxLoggerCM;
 import com.firemstar.fdp.db.derby.domain.DerbyArticle;
 import com.firemstar.fdp.db.derby.repository.DerbyArticleRepository;
 
@@ -24,6 +25,9 @@ class TestPulsarThread {
 	
 	@Autowired
 	private DerbyArticleRepository articleDAO;
+	
+	@Autowired
+	private InfluxLoggerCM influx;
 
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
@@ -44,7 +48,7 @@ class TestPulsarThread {
 	@Test
 	void test() {
     	PulsarThread ct = new PulsarThread("localhost", "6650", "newspaper", 
-    			articleDAO);
+    			articleDAO, influx);
     	Thread t = new Thread(ct,"fms");
     	t.start();
     	try {
