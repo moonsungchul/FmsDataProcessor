@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.firemstar.fdp.core.orientdb.OrientStore;
+//import com.firemstar.fdp.core.orientdb.OrientStore;
 import com.orientechnologies.orient.core.metadata.schema.OClass;
 import com.orientechnologies.orient.core.metadata.schema.OType;
 
@@ -37,18 +37,17 @@ class TestOrient {
 	@Test
 	void test() {
 		logger.info(">>>>>>>>>>>> test :");
+		/*
 		String host = "localhost";
 		String user = "admin";
 		String passwd = "admin";
 		String dbname = "Newspaper";
 		
 		OrientStore store = new OrientStore(host, user, passwd, dbname);
-		/*
 		store.createVertexClass("ArticleV");
 		store.createVertexClass("WordsV");
 		store.createEdgeClass("ArticleE");
 		store.createEdgeClass("WordsE");
-		*/
 		
 		store.createProperty("ArticleV", "id", OType.STRING);
 		store.createProperty("ArticleV", "title", OType.STRING);
@@ -60,7 +59,7 @@ class TestOrient {
 		store.createIndex("Words", "sid_index", "sid", OClass.INDEX_TYPE.UNIQUE);
 		store.createIndex("Words", "word_index", "word", OClass.INDEX_TYPE.UNIQUE);
 		
-		store.close();
+		store.close(); */
 		
 	}
 

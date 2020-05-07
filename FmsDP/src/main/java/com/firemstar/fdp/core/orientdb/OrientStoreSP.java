@@ -7,13 +7,13 @@ import com.firemstar.fdp.AppProperies;
 import com.orientechnologies.orient.core.metadata.schema.OType;
 import com.orientechnologies.orient.core.metadata.schema.OClass;
 
-@Component
+//@Component
 public class OrientStoreSP {
 	private AppProperies property;
 	private OrientStore orient;
 	
 	
-	@Autowired
+	//@Autowired
 	public OrientStoreSP(AppProperies pro) {
 		this.property = pro;
 		this.orient = new OrientStore(pro.getOrientdb().getHost(), 

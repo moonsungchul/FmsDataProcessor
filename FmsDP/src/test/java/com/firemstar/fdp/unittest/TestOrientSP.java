@@ -10,13 +10,13 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.firemstar.fdp.core.orientdb.OrientStoreSP;
+//import com.firemstar.fdp.core.orientdb.OrientStoreSP;
 
 @SpringBootTest
 class TestOrientSP {
 	
 	@Autowired
-	OrientStoreSP orient;
+	//OrientStoreSP orient;
 
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
@@ -36,7 +36,7 @@ class TestOrientSP {
 
 	@Test
 	void test() {
-		orient.createSchema();
+		//orient.createSchema();
 	}
 
 }

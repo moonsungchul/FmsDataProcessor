@@ -33,11 +33,11 @@ public class PulsarThread implements Runnable {
     public PulsarThread(String ip, String port, String topic, 
     		DerbyArticleRepository dao, InfluxLoggerCM influx){
     	this.topic = topic;
-    	pulsar = new PulsarStore(ip, port);
+    	this.pulsar = new PulsarStore(ip, port);
     	this.ip = ip;
     	this.port = port;
-    	jsonUtil = new JsonUtil();
-    	articleDAO = dao;
+    	this.jsonUtil = new JsonUtil();
+    	this.articleDAO = dao;
     	this.influx = influx;
     	
     }
