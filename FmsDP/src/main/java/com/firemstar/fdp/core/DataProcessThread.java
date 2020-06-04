@@ -21,7 +21,7 @@ import com.firemstar.fdp.db.cockroach.repository.CockroachArticleRepository;
 import com.firemstar.fdp.db.derby.domain.DerbyArticle;
 import com.firemstar.fdp.db.derby.repository.DerbyArticleRepository;
 
-import jdk.internal.jline.internal.Log;
+//import jdk.internal.jline.internal.Log;
 
 
 public class DataProcessThread implements Runnable {
