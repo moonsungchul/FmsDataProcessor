@@ -3,8 +3,11 @@ package com.firemstar.fdp.core;
 import org.apache.pulsar.client.api.Consumer;
 import org.apache.pulsar.client.api.PulsarClient;
 import org.apache.pulsar.client.api.PulsarClientException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class PulsarStore {
+	private Logger logger = LoggerFactory.getLogger(PulsarStore.class);
 	
 	private String ip = "";
 	private String port = "";
@@ -18,6 +21,7 @@ public class PulsarStore {
 	public PulsarClient getClient() {
 		try {
 			String con = String.format("pulsar://%s:%s", this.ip, this.port);
+			logger.info(">>>>>>>>>>>>>>>>>>>>> con : " + con);
 			PulsarClient client = PulsarClient.builder()
 			        .serviceUrl(con)
 			        .build();

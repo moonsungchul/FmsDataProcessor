@@ -28,7 +28,7 @@ class TestInfluxLogger {
 	void tearDown() throws Exception {
 	}
 
-	@Test
+	//@Test
 	void test() {
 		String host = "localhost";
 		String port = "28086";

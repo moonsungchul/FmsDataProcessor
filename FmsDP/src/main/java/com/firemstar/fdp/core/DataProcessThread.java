@@ -55,7 +55,8 @@ public class DataProcessThread implements Runnable {
     	System.out.println(this.influx);
     	this.influx.getLogger().info("DataProcess", "Start DataProcess thread start");
     	HangulParser parser = new HangulParser();
-    	while(!this.stop) {
+    	while(!Thread.currentThread().isInterrupted()) {
+    		if(!this.stop) break;
     		if(this.derbyDAO.count() > 0) {
     			long min_id = this.derbyDAO.getMinID();
     			Optional<DerbyArticle> art =  this.derbyDAO.findById(min_id);

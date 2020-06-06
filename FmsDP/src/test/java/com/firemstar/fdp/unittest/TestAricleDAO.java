@@ -48,7 +48,7 @@ class TestAricleDAO {
 	void tearDown() throws Exception {
 	}
 
-	@Test
+	//@Test
 	void test() {
 		log.info(">>>>>>>>>>>>>>> test Article service ....");
 		//List<Article> articles = articleImpl.listAll();

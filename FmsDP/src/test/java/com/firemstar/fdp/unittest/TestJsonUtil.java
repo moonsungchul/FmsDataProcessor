@@ -47,7 +47,7 @@ class TestJsonUtil {
 		logger.info(">>>>>> article : " + article);
 	}
 	
-	@Test
+	//@Test
 	void test2() {
 		JsonUtil jsonUtil = new JsonUtil();
 		try {

@@ -34,7 +34,7 @@ class TestOrientSP {
 	void tearDown() throws Exception {
 	}
 
-	@Test
+	//@Test
 	void test() {
 		//orient.createSchema();
 	}

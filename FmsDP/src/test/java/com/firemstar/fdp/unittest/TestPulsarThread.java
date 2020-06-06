@@ -2,6 +2,9 @@ package com.firemstar.fdp.unittest;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import org.apache.pulsar.client.api.Consumer;
+import org.apache.pulsar.client.api.PulsarClient;
+import org.apache.pulsar.client.api.PulsarClientException;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
@@ -12,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
+import com.firemstar.fdp.core.PulsarStore;
 import com.firemstar.fdp.core.PulsarThread;
 import com.firemstar.fdp.core.influxdb.InfluxLoggerCM;
 import com.firemstar.fdp.db.derby.domain.DerbyArticle;
@@ -45,7 +49,7 @@ class TestPulsarThread {
 	void tearDown() throws Exception {
 	}
 
-	@Test
+	//@Test
 	void test() {
     	PulsarThread ct = new PulsarThread("localhost", "6650", "newspaper", 
     			articleDAO, influx);
@@ -63,6 +67,22 @@ class TestPulsarThread {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 
+	}
+	
+	//@Test
+	void test2() {
+		logger.info(">>>>>>>>>>>>>>>>>>>> test 2 ");
+		String host = "192.168.0.31";
+		String port = "6650";
+		PulsarStore store = new PulsarStore(host, port);
+		PulsarClient cl = store.getClient();
+		Consumer consumer = store.getConsumer(cl,  "newspaper");
+		try {
+			consumer.batchReceive();
+		} catch (PulsarClientException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }

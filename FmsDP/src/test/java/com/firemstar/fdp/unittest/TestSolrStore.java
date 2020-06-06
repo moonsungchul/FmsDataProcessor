@@ -12,6 +12,9 @@ import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.firemstar.fdp.core.solr.SolrArticle;
+import com.firemstar.fdp.core.solr.SolrStore;
+
 //import com.firemstar.fdp.core.solr.SolrArticle;
 //import com.firemstar.fdp.core.solr.SolrStore;
 
@@ -35,10 +38,9 @@ class TestSolrStore {
 	void tearDown() throws Exception {
 	}
 
-	@Test
+	//@Test
 	void test() {
 		logger.info("test");
-		/*
 		String url = "http://localhost:8983/solr";
 		String collection = "newspaper";
 		SolrStore store = new SolrStore(url, collection);
@@ -49,7 +51,7 @@ class TestSolrStore {
 		List<SolrArticle> ar = store.searchArticle("*:*", 0, 100);
 		for(SolrArticle m : ar) {
 			logger.info("@@@@@@@@@@@@@@@@@@@ : " + m.toString());
-		}     */
+		}     
 		
 	}
 

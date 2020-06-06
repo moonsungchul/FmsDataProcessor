@@ -1,13 +1,13 @@
 ----------------------------------------------------------------
-Sun Mar 15 15:51:26 KST 2020:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance a816c00e-0170-dcf6-2dc6-000006edfe08 
-on database directory /home/moonstar/newspaper.db with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@5c29bfd 
-Loaded from file:/home/moonstar/.m2/repository/org/apache/derby/derby/10.14.2.0/derby-10.14.2.0.jar
-java.vendor=Ubuntu
-java.runtime.version=11.0.6+10-post-Ubuntu-1ubuntu118.04.1
-user.dir=/home/moonstar/work/java_work/eclipse_workspace/FmsDataProcessor/FmsDP
-os.name=Linux
+Sat Jun 06 23:14:11 KST 2020:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance a816c00e-0172-89fb-5ae0-000002244580 
+on database directory D:\home\moonstar\newspaper.db with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@15db9742 
+Loaded from file:/C:/Users/moons/.m2/repository/org/apache/derby/derby/10.14.2.0/derby-10.14.2.0.jar
+java.vendor=Oracle Corporation
+java.runtime.version=14+36-1461
+user.dir=D:\workspace\java_workspace\FmsDataProcessor\FmsDP
+os.name=Windows 10
 os.arch=amd64
-os.version=5.3.0-40-generic
+os.version=10.0
 derby.system.home=null
 Database Class Loader started - derby.database.classpath=''
