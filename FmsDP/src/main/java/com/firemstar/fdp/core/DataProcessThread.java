@@ -29,7 +29,7 @@ public class DataProcessThread implements Runnable {
 	
 	private InfluxLoggerCM influx;
 	
-	private boolean stop = false;
+	private boolean stop = true;
 	private final long delay_time = 10000;
 	
 	private CockroachArticleRepository cockroachDAO;
@@ -63,8 +63,12 @@ public class DataProcessThread implements Runnable {
     			if(art.isPresent()) {
     				logger.info(">>>>>> :" + art.get().toString());
     				if(this.cockroachDAO.countTitle(art.get().getTitle()) == 0) {
-    					KomoranResultAr retAr = parser.parsing(art.get().getText());
-    					CockroachArticle coc = new CockroachArticle(
+    					if(art.get().getText() != null &&  art.get().getText().isEmpty() == false) {
+    						logger.info("parser : " +  parser);
+    						logger.info(">>>>>> :" + art.get().getText().isEmpty());
+    						logger.info(">>>>>> :" + art.get().getText());
+    						KomoranResultAr retAr = parser.parsing(art.get().getText());
+    						CockroachArticle coc = new CockroachArticle(
     							art.get().getTitle(), 
     							art.get().getText(), 
     							art.get().getRegDate(), 
@@ -72,11 +76,12 @@ public class DataProcessThread implements Runnable {
     							String.join(",", retAr.getvArr()), 
     							String.join(",", retAr.getVaArr()), 
     							art.get().getCompany());
-    					this.cockroachDAO.save(coc);
-    					this.saveSolrArticle(coc);
+    						this.cockroachDAO.save(coc);
+    						this.saveSolrArticle(coc);
     					
-    				} else {
-    					logger.info("same data!");
+    					} else {
+    						logger.info("same data!");
+    					}
     				}
     				this.derbyDAO.delete(art.get());
     			}

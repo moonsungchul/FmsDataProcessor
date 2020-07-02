@@ -27,6 +27,7 @@ public class HangulParser {
 	 * @return
 	 */
 	public KomoranResultAr parsing(String ss ) {
+		logger.info("ssssssssss :||" +  ss + "|||");
 		KomoranResultAr ret = new KomoranResultAr();
 		KomoranResult res = komoran.analyze(ss);
 		
